@@ -47,7 +47,7 @@ const MAX_CHANNEL_NAME_LENGTH = 32;
 const TYPING_TIMEOUT_MS = 4000;
 
 // Serve the frontend
-app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // -----------------------------------------------------------------------
 // In-memory "database"
@@ -454,7 +454,7 @@ function emitTypingList(channelId) {
 // -----------------------------------------------------------------------
 
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+  res.status(404).sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 process.on('uncaughtException', (err) => {
@@ -466,3 +466,4 @@ server.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`Chat server running at http://localhost:${PORT}`);
 });
+
