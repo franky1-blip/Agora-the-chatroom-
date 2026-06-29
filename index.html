@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Chat App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================================================= -->
+  <!-- Username modal: shown on first visit / whenever no name is set -->
+  <!-- ============================================================= -->
+  <div id="username-modal" class="modal-overlay">
+    <div class="modal">
+      <h2>Choose a username</h2>
+      <p class="modal-subtext">This is how others will see you. No account needed.</p>
+      <input
+        id="username-input"
+        type="text"
+        maxlength="24"
+        placeholder="e.g. NightOwl42"
+        autocomplete="off"
+      />
+      <p id="username-error" class="modal-error" hidden></p>
+      <button id="username-submit" class="btn-primary">Join Chat</button>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- Create-channel modal -->
+  <!-- ============================================================= -->
+  <div id="channel-modal" class="modal-overlay" hidden>
+    <div class="modal">
+      <h2>Create a channel</h2>
+      <input
+        id="channel-input"
+        type="text"
+        maxlength="32"
+        placeholder="e.g. project-ideas"
+        autocomplete="off"
+      />
+      <p id="channel-error" class="modal-error" hidden></p>
+      <div class="modal-actions">
+        <button id="channel-cancel" class="btn-secondary">Cancel</button>
+        <button id="channel-submit" class="btn-primary">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- App shell -->
+  <!-- ============================================================= -->
+  <div id="app" class="app" hidden>
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <button id="sidebar-toggle" class="icon-btn" aria-label="Toggle sidebar">☰</button>
+      <span class="brand">Chat App</span>
+      <span class="current-channel-label" id="current-channel-label">#general</span>
+      <div class="topbar-right">
+        <span id="connection-status" class="connection-status">●</span>
+        <span class="users-pill" id="users-pill">👤 <span id="users-count">0</span></span>
+        <button id="my-username-btn" class="username-pill" title="Click to change username"></button>
+      </div>
+    </header>
+
+    <div class="body-layout">
+
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+          <div class="sidebar-section-header">
+            <span>Channels</span>
+            <button id="add-channel-btn" class="icon-btn small" title="Create channel">+</button>
+          </div>
+          <ul id="channel-list" class="channel-list"></ul>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-section-header">
+            <span>Online — <span id="users-count-sidebar">0</span></span>
+          </div>
+          <ul id="user-list" class="user-list"></ul>
+        </div>
+      </aside>
+
+      <!-- Main chat area -->
+      <main class="chat-area">
+        <div id="messages" class="messages" aria-live="polite"></div>
+
+        <div id="typing-indicator" class="typing-indicator" hidden></div>
+
+        <form id="message-form" class="message-form">
+          <textarea
+            id="message-input"
+            placeholder="Message #general  (Enter to send, Ctrl+Enter for new line)"
+            maxlength="2000"
+            rows="1"
+          ></textarea>
+          <button type="submit" id="send-btn" class="btn-primary send-btn">Send</button>
+        </form>
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast / error notifications -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
